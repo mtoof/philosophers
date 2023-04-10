@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mtoof <mtoof@stdudent.hive.fi>             +#+  +:+       +#+         #
+#    By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/10 20:07:03 by mtoof             #+#    #+#              #
-#    Updated: 2023/04/10 20:24:59 by mtoof            ###   ########.fr        #
+#    Updated: 2023/04/10 10:56:14 by mtoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $@ $?
+	cc $(FLAGS) -I$(HEADER) $(SRC_DIR)$(SRC) -o $@
 
 $(OBJ): $(OBJ_DIR)%.o: %.c | obj_dir
-	gcc $(FLAGS) -I$(HEADER) -c -o $@ $<
+	cc $(FLAGS) -I$(HEADER) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
