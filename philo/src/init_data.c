@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/18 12:07:53 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/18 18:28:09 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,28 @@ void	alloc_philo_data(t_data *data)
 	data->philo = malloc(sizeof(t_philo) * data->philo_num);
 	while (i < data->philo_num)
 	{
-		data->philo[i].id = i;
+		data->philo[i].id = i + 1;
 		data->philo[i].eat_count = 0;
+		data->philo[i].data = data;
 		i++;
 	}
 }
 
-void	alloc_init_mutex(t_data *data)
+void	alloc_mutex(t_data *data)
 {
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->philo_num);
 }
 
 void	init_mutex(t_data *data)
 {
-	
+	int	i;
+
+	i = 0;
+	while (i < data->philo_num)
+	{
+		pthread_mutex_init(&data->fork[i], NULL);
+		i++;
+	}
 }
 
 void	data_init(t_data *data, char **av, int ac)
@@ -46,6 +54,6 @@ void	data_init(t_data *data, char **av, int ac)
 		data->meal_num = (int)atoi(av[5]);
 	else
 		data->meal_num = -1;
-	alloc_philo_data(&data);
-	alloc_mutex(&data);
+	alloc_philo_data(data);
+	alloc_mutex(data);
 }
