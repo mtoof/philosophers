@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   check_digit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 14:05:11 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/18 12:08:11 by mtoof            ###   ########.fr       */
+/*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
+/*   Updated: 2023/04/17 14:38:10 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/philo.h"
+#include "philo.h"
 
-int	main(int ac, char **av)
+static int	ft_isdigit(int c)
 {
-	t_data			data;
-	pthread_t		*tr;
-	int				i;
-
-
-	if (ac < 5 || ac > 6)
-	{
-		args_error(ac, av, 0);
+	if (c >= '0' && c <= '9')
 		return (1);
-	}
-	if (check_digit(av) != 1)
-		args_error(ac, av, 1);
-	else
-	{
-		i = 0;
-		data_init(&data, av, ac);
-		init_mutex(&data);
-	}
 	return (0);
+}
+
+int	check_digit(char **av)
+{
+	int	j;
+	int	i;
+
+	i = 1;
+	while (av[i])
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (ft_isdigit(av[i][j]) == 1)
+				j++;
+			else
+				return (-1);
+		}
+		i++;
+	}
+	return (1);
 }

@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 14:05:11 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/18 12:08:11 by mtoof            ###   ########.fr       */
+/*   Created: 2022/08/15 14:13:33 by mtoof             #+#    #+#             */
+/*   Updated: 2023/04/17 14:04:56 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/philo.h"
+#include "philo.h"
 
-int	main(int ac, char **av)
+long	ft_atol(const char *str)
 {
-	t_data			data;
-	pthread_t		*tr;
-	int				i;
+	int		i;
+	long	n;
+	int		sign;
 
-
-	if (ac < 5 || ac > 6)
+	i = 0;
+	n = 0;
+	sign = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+		sign = sign * -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		args_error(ac, av, 0);
-		return (1);
+		n = (n * 10) + str[i] - '0';
+		i++;
 	}
-	if (check_digit(av) != 1)
-		args_error(ac, av, 1);
-	else
-	{
-		i = 0;
-		data_init(&data, av, ac);
-		init_mutex(&data);
-	}
-	return (0);
+	return (n * sign);
 }
