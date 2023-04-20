@@ -6,11 +6,11 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/18 18:28:09 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/20 14:28:01 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/philo.h"
+#include "philo.h"
 
 void	alloc_philo_data(t_data *data)
 {
@@ -42,6 +42,7 @@ void	init_mutex(t_data *data)
 		pthread_mutex_init(&data->fork[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&data->print, NULL);
 }
 
 void	data_init(t_data *data, char **av, int ac)
@@ -54,6 +55,7 @@ void	data_init(t_data *data, char **av, int ac)
 		data->meal_num = (int)atoi(av[5]);
 	else
 		data->meal_num = -1;
+	data->start_time = get_time();
 	alloc_philo_data(data);
 	alloc_mutex(data);
 }
