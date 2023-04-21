@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/20 15:01:10 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/21 13:45:56 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ typedef struct s_data
 }					t_data;
 
 long				ft_atol(const char *str);
-int					check_digit(char **av);
-void				args_error(int ac, char **av, int flag);
-void				data_init(t_data *data, char **av, int ac);
-void				init_mutex(t_data *data);
+int					check_args(int ac, char **av);
+int					data_init(t_data *data, char **av, int ac);
+int					init_mutex(t_data *data);
 void				ft_usleep(int time);
 unsigned long		get_time(void);
 void				print_msg(unsigned long time, t_philo *philo, char *msg);
 unsigned long		realtime(unsigned long time);
+void				*routine(void *data);
 
 #endif

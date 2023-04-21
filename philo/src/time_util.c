@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_msg.c                                        :+:      :+:    :+:   */
+/*   time_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 13:27:25 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/21 12:49:12 by mtoof            ###   ########.fr       */
+/*   Created: 2023/04/19 15:12:39 by mtoof             #+#    #+#             */
+/*   Updated: 2023/04/21 15:03:34 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	realtime(unsigned long time)
+unsigned long	get_time(void)
 {
-	unsigned long	realtime;
+	struct timeval	time;
+	unsigned long	total;
+	unsigned long	sec;
+	unsigned long	usec;
 
-	realtime = get_time() - time;
-	return (realtime);
+	gettimeofday(&time, NULL);
+	sec = (time.tv_sec * 1000);
+	usec = (time.tv_usec / 1000);
+	total = sec + usec;
+	return (total);
 }
 
-void	print_msg(unsigned long time, t_philo *philo, char *msg)
+void	ft_usleep(int time)
 {
-	pthread_mutex_lock(&philo->data->print);
-	printf("%ld %d %s\n", realtime(time), philo->id, msg);
-	pthread_mutex_unlock(&philo->data->print);
+	unsigned long	loop;
+
+	loop = get_time() + (unsigned long)time;
+	while (get_time() < loop)
+		usleep(500);
 }

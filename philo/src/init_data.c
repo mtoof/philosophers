@@ -6,18 +6,20 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/20 14:28:01 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/21 14:48:25 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	alloc_philo_data(t_data *data)
+int	alloc_philo_data(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->philo_num);
+	if (!data->philo)
+		return (-1);
 	while (i < data->philo_num)
 	{
 		data->philo[i].id = i + 1;
@@ -25,27 +27,34 @@ void	alloc_philo_data(t_data *data)
 		data->philo[i].data = data;
 		i++;
 	}
+	return (0);
 }
 
-void	alloc_mutex(t_data *data)
+int	alloc_mutex(t_data *data)
 {
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->philo_num);
+	if (!data->fork)
+		return (-1);
+	return (0);
 }
 
-void	init_mutex(t_data *data)
+int	init_mutex(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->philo_num)
 	{
-		pthread_mutex_init(&data->fork[i], NULL);
+		if (pthread_mutex_init(&data->fork[i], NULL) != 0)
+			return (-1);
 		i++;
 	}
-	pthread_mutex_init(&data->print, NULL);
+	if (pthread_mutex_init(&data->print, NULL) != 0)
+		return (-1);
+	return (0);
 }
 
-void	data_init(t_data *data, char **av, int ac)
+int	data_init(t_data *data, char **av, int ac)
 {
 	data->philo_num = (int)atoi(av[1]);
 	data->death_time = (u_int64_t)atoi(av[2]);
@@ -56,6 +65,9 @@ void	data_init(t_data *data, char **av, int ac)
 	else
 		data->meal_num = -1;
 	data->start_time = get_time();
-	alloc_philo_data(data);
-	alloc_mutex(data);
+	if (alloc_philo_data(data) != 0)
+		return (-1);
+	if (alloc_mutex(data) != 0)
+		return (-1);
+	return (0);
 }
