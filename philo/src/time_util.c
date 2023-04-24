@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:12:39 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/21 15:03:34 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/24 16:50:53 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ unsigned long	get_time(void)
 	return (total);
 }
 
-void	ft_usleep(int time)
+void	ft_usleep(long time)
 {
 	unsigned long	loop;
 

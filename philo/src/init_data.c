@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/21 14:48:25 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/24 18:14:09 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int	init_mutex(t_data *data)
 	}
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (-1);
+	if (pthread_mutex_init(&data->lock, NULL) != 0)
+		return (-1);
+	if (pthread_mutex_init(&data->eaten, NULL) != 0)
+		return (-1);
 	return (0);
 }
 
@@ -60,6 +64,7 @@ int	data_init(t_data *data, char **av, int ac)
 	data->death_time = (u_int64_t)atoi(av[2]);
 	data->eat_time = (u_int64_t)atoi(av[3]);
 	data->sleep_time = (u_int64_t)atoi(av[4]);
+	data->finish = 0;
 	if (ac == 6)
 		data->meal_num = (int)atoi(av[5]);
 	else
