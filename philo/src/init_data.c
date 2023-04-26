@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/24 18:14:09 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:50:12 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	alloc_philo_data(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].eat_count = 0;
+		data->philo[i].finish = 0;
 		data->philo[i].data = data;
 		i++;
 	}
@@ -64,7 +65,8 @@ int	data_init(t_data *data, char **av, int ac)
 	data->death_time = (u_int64_t)atoi(av[2]);
 	data->eat_time = (u_int64_t)atoi(av[3]);
 	data->sleep_time = (u_int64_t)atoi(av[4]);
-	data->finish = 0;
+	data->kill_philos = 0;
+	data->j = 0;
 	if (ac == 6)
 		data->meal_num = (int)atoi(av[5]);
 	else

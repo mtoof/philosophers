@@ -6,16 +6,19 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/24 18:31:08 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/26 17:55:02 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	philo_eaten(t_philo *philo)
+void	philo_eaten(t_philo *philo)
 {
-	if (philo->eat_count == philo->data->meal_num)
-		philo->data->finish++;
+	pthread_mutex_lock(&philo->data->eaten);
+	if (philo->eat_count >= philo->data->meal_num)
+		philo->finish = 1;
+	pthread_mutex_unlock(&philo->data->eaten);
+	usleep(100);
 }
 
 void	take_fork(t_philo *philo)
@@ -27,6 +30,13 @@ void	take_fork(t_philo *philo)
 	print_msg(philo->data->start_time, philo, "has taken a fork");
 }
 
+void	put_fork(t_philo *philo)
+{
+	pthread_mutex_unlock(&philo->data->fork[philo->id
+		% (philo->data->philo_num)]);
+	pthread_mutex_unlock(&philo->data->fork[philo->id - 1]);
+}
+
 void	*routine(void *data)
 {
 	t_philo			*philo;
@@ -36,19 +46,18 @@ void	*routine(void *data)
 		usleep(100);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->eaten);
 		take_fork(philo);
 		print_msg(philo->data->start_time, philo, "is eating");
 		philo->eat_count++;
 		philo_eaten(philo);
 		ft_usleep(philo->data->eat_time);
-		pthread_mutex_unlock(&philo->data->fork[philo->id
-			% (philo->data->philo_num)]);
-		pthread_mutex_unlock(&philo->data->fork[philo->id - 1]);
+		put_fork(philo);
 		print_msg(philo->data->start_time, philo, "is sleeping");
 		ft_usleep(philo->data->sleep_time);
 		print_msg(philo->data->start_time, philo, "is thinking");
-		pthread_mutex_unlock(&philo->data->eaten);
+		if (eaten_died_check(philo, philo->data) == 0)
+			break ;
 	}
-	return (NULL);
+	philo->data->j++;
+	return (philo);
 }

@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:27:25 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/21 12:49:12 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/26 18:08:49 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,4 @@ void	print_msg(unsigned long time, t_philo *philo, char *msg)
 	printf("%ld %d %s\n", realtime(time), philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print);
 }
+	

@@ -6,46 +6,39 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/24 18:44:27 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/26 18:05:30 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	eaten_died_check(pthread_t *tr, t_data *data)
+int	eaten_died_check(t_philo *philo, t_data *data)
 {
 	int	i;
-	// int	j;
+	int	finish_result;
 
-	// j = 0;
 	i = 0;
-	(void)tr;
-	while(1)
+	finish_result = 1;
+	while (i < data->philo_num)
 	{
-		pthread_mutex_lock(&data->lock);
-		if (data->philo[i].data->finish == data->philo_num)
-		{
-			printf("data->philo[%d] has finished = %d\n", i, data->philo[i].data->finish);
-			// join_destroy(tr, *data);
-			// pthread_join(tr[i], NULL);
-			// while (j < data->philo_num)
-			// {
-			// 	pthread_mutex_destroy(&data->fork[j]);
-			// 	j++;
-			// }
-			// pthread_mutex_destroy(&data->print);
-			// pthread_mutex_destroy(&data->lock);
-			// if (data->fork)
-			// 	free(data->fork);
-			// if (data->philo)
-			// 	free(data->philo);
-			// if (tr)
-			// 	free(tr);
-			// printf("data->philo[%d] has finished %d\n", data->finish);
-			pthread_mutex_unlock(&data->lock);
-			return ;
-		}
-		i = (i + 1) % data->philo_num;
-		usleep(500);
+		pthread_mutex_lock(&data->eaten);
+		if (philo[i].finish == 0)
+			finish_result = 0;
+		pthread_mutex_unlock(&data->eaten);
+		i++;
 	}
+	if (finish_result == 1)
+	{
+		printf("\tall eaten enough!\n");
+		i = -1;
+		while (++i < data->philo_num)
+		{
+			pthread_mutex_unlock(&data->fork[philo[i].id - 1]);
+			pthread_mutex_unlock(&data->fork[philo[i].id % data->philo_num]);
+		}
+		return (0);
+	}
+	i = 0;
+	usleep(500);
+	return (1);
 }
