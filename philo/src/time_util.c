@@ -6,31 +6,25 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:12:39 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/24 16:50:53 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 18:09:15 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long	get_time(void)
+uint64_t	get_time(void)
 {
-	struct timeval	time;
-	unsigned long	total;
-	unsigned long	sec;
-	unsigned long	usec;
+	struct timeval	timeval;
 
-	gettimeofday(&time, NULL);
-	sec = (time.tv_sec * 1000);
-	usec = (time.tv_usec / 1000);
-	total = sec + usec;
-	return (total);
+	gettimeofday(&timeval, NULL);
+	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
 }
 
-void	ft_usleep(long time)
+void	ft_usleep(int time)
 {
-	unsigned long	loop;
+	u_int64_t	loop;
 
-	loop = get_time() + (unsigned long)time;
+	loop = get_time() + (u_int64_t)time;
 	while (get_time() < loop)
 		usleep(500);
 }

@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 15:43:24 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 17:45:16 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	alloc_philo_data(t_data *data)
 		data->philo[i].eat_count = 0;
 		data->philo[i].finish = 0;
 		data->philo[i].status = 0;
+		data->philo[i].last_meal = data->start_time;
 		data->philo[i].data = data;
 		i++;
 	}
@@ -61,6 +62,8 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->eaten, NULL) != 0)
 		return (-1);
 	if (pthread_mutex_init(&data->finish, NULL) != 0)
+		return (-1);
+	if (pthread_mutex_init(&data->lmealt, NULL) != 0)
 		return (-1);
 	return (0);
 }

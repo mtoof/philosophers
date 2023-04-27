@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 15:46:48 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 18:09:26 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int				eating;
 	int				finish;
 	unsigned long	time_to_die;
+	unsigned long	last_meal;
 	struct s_data	*data;
 }					t_philo;
 
@@ -45,6 +46,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	eaten;
+	pthread_mutex_t	lmealt;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	finish;
 }					t_data;
@@ -53,8 +55,8 @@ long				ft_atol(const char *str);
 int					check_args(int ac, char **av);
 int					data_init(t_data *data, char **av, int ac);
 int					init_mutex(t_data *data);
-void				ft_usleep(long time);
-unsigned long		get_time(void);
+void				ft_usleep(int time);
+uint64_t			get_time(void);
 void				print_msg(unsigned long time, t_philo *philo, char *msg);
 unsigned long		realtime(unsigned long time);
 void				*routine(void *data);

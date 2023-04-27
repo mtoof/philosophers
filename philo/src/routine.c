@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 15:54:25 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 18:18:53 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void	philo_eaten(t_philo *philo)
 	pthread_mutex_lock(&philo->data->eaten);
 	if (philo->eat_count >= philo->data->meal_num)
 		philo->finish = 1;
+	philo->eat_count++;
 	pthread_mutex_unlock(&philo->data->eaten);
+	pthread_mutex_lock(&philo->data->lmealt);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->data->lmealt);
 }
 
 void	take_fork(t_philo *philo)
@@ -65,9 +69,8 @@ void	*routine(void *data)
 	{
 		take_fork(philo);
 		print_msg(philo->data->start_time, philo, "is eating");
-		philo->eat_count++;
-		philo_eaten(philo);
 		ft_usleep(philo->data->eat_time);
+		philo_eaten(philo);
 		put_fork(philo);
 		print_msg(philo->data->start_time, philo, "is sleeping");
 		ft_usleep(philo->data->sleep_time);

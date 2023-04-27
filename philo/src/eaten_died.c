@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 15:53:03 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 18:17:55 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@ int	eaten_died(t_data *data)
 
 	i = 0;
 	finish_result = 1;
+	while (i < data->philo_num)
+	{
+		pthread_mutex_lock(&data->lmealt);
+		if ((realtime(data->philo[i].last_meal) >= data->death_time))
+		{
+			print_msg(data->start_time, &data->philo[i], "died");
+			checker(data->philo, 1);
+			pthread_mutex_unlock(&data->lmealt);
+			return (1);
+		}
+		pthread_mutex_unlock(&data->lmealt);
+		i++;
+	}
+	// printf("philo[%d] last meal = %lu\n", data->philo[i].id, realtime(data->philo[i].last_meal));
+	i = 0;
 	while (i < data->philo_num)
 	{
 		pthread_mutex_lock(&data->eaten);
