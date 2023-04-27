@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/26 17:55:02 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/27 15:54:25 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	philo_eaten(t_philo *philo)
 	if (philo->eat_count >= philo->data->meal_num)
 		philo->finish = 1;
 	pthread_mutex_unlock(&philo->data->eaten);
-	usleep(100);
 }
 
 void	take_fork(t_philo *philo)
@@ -37,14 +36,32 @@ void	put_fork(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->fork[philo->id - 1]);
 }
 
+int	checker(t_philo *philo, int flag)
+{
+	pthread_mutex_lock(&philo->data->finish);
+	if (flag == 1)
+	{
+		philo->data->eaten_enough = 1;
+		pthread_mutex_unlock(&philo->data->finish);
+		return (1);
+	}
+	if (philo->data->eaten_enough)
+	{
+		pthread_mutex_unlock(&philo->data->finish);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->finish);
+	return (0);
+}
+
 void	*routine(void *data)
 {
-	t_philo			*philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)data;
 	if (philo->id % 2 == 0)
-		usleep(100);
-	while (1)
+		ft_usleep(philo->data->eat_time);
+	while (!checker(philo, 0))
 	{
 		take_fork(philo);
 		print_msg(philo->data->start_time, philo, "is eating");
@@ -55,9 +72,8 @@ void	*routine(void *data)
 		print_msg(philo->data->start_time, philo, "is sleeping");
 		ft_usleep(philo->data->sleep_time);
 		print_msg(philo->data->start_time, philo, "is thinking");
-		if (eaten_died_check(philo, philo->data) == 0)
-			break ;
+		pthread_mutex_lock(&philo->data->lock);
+		pthread_mutex_unlock(&philo->data->lock);
 	}
-	philo->data->j++;
-	return (philo);
+	return (data);
 }
