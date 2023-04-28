@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 18:18:53 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/28 10:14:56 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ void	*routine(void *data)
 	philo = (t_philo *)data;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->eat_time);
-	while (!checker(philo, 0))
+	while (1)
 	{
+		if (checker(philo, 0))
+			return (NULL);
 		take_fork(philo);
 		print_msg(philo->data->start_time, philo, "is eating");
 		ft_usleep(philo->data->eat_time);

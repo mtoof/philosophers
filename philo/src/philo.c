@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:11 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 15:52:03 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/28 10:11:31 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	join_destroy(t_data *data)
 	{
 		pthread_join(data->tr[i], NULL);
 		i++;
+		usleep(100);
 	}
 	i = 0;
 	while (i < data->philo_num)

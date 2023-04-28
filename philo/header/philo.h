@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/27 18:09:26 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/04/28 10:13:44 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_philo
 	int				status;
 	int				eating;
 	int				finish;
-	unsigned long	time_to_die;
-	unsigned long	last_meal;
+	long long		time_to_die;
+	long long		last_meal;
 	struct s_data	*data;
 }					t_philo;
 
@@ -39,10 +39,10 @@ typedef struct s_data
 	int				eaten_enough;
 	t_philo			*philo;
 	pthread_t		*tr;
-	unsigned long	death_time;
-	unsigned long	eat_time;
-	unsigned long	sleep_time;
-	unsigned long	start_time;
+	long long		death_time;
+	long long		eat_time;
+	long long		sleep_time;
+	long long		start_time;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	eaten;
@@ -55,10 +55,10 @@ long				ft_atol(const char *str);
 int					check_args(int ac, char **av);
 int					data_init(t_data *data, char **av, int ac);
 int					init_mutex(t_data *data);
-void				ft_usleep(int time);
-uint64_t			get_time(void);
-void				print_msg(unsigned long time, t_philo *philo, char *msg);
-unsigned long		realtime(unsigned long time);
+void				ft_usleep(long long time);
+long long			get_time(void);
+void				print_msg(long long time, t_philo *philo, char *msg);
+long long			realtime(long long time);
 void				*routine(void *data);
 void				observer(t_data *data);
 int					join_destroy(t_data *data);
