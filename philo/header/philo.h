@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/28 10:13:44 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 17:54:27 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ long				ft_atol(const char *str);
 int					check_args(int ac, char **av);
 int					data_init(t_data *data, char **av, int ac);
 int					init_mutex(t_data *data);
-void				ft_usleep(long long time);
+void				ft_usleep(t_philo *philo, long long time);
 long long			get_time(void);
 void				print_msg(long long time, t_philo *philo, char *msg);
 long long			realtime(long long time);

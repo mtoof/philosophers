@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/28 10:07:03 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:22:12 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	alloc_philo_data(t_data *data)
 {
 	int	i;
 
-	i = 0;
 	data->tr = malloc(sizeof(pthread_t) * data->philo_num);
 	if (!data->tr)
 		return (-1);
 	data->philo = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philo)
 		return (-1);
-	while (i < data->philo_num)
+	i = -1;
+	while (++i < data->philo_num)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].eat_count = 0;
@@ -31,7 +31,6 @@ int	alloc_philo_data(t_data *data)
 		data->philo[i].status = 0;
 		data->philo[i].last_meal = data->start_time;
 		data->philo[i].data = data;
-		i++;
 	}
 	return (0);
 }

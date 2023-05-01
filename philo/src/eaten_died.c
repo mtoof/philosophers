@@ -6,19 +6,17 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/28 10:12:47 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:10:03 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	eaten_died(t_data *data)
+int	died(t_data *data)
 {
 	int	i;
-	int	finish_result;
 
 	i = 0;
-	finish_result = 1;
 	while (i < data->philo_num)
 	{
 		pthread_mutex_lock(&data->lmealt);
@@ -32,7 +30,16 @@ int	eaten_died(t_data *data)
 		pthread_mutex_unlock(&data->lmealt);
 		i++;
 	}
-	// printf("philo[%d] last meal = %lu\n", data->philo[i].id, realtime(data->philo[i].last_meal));
+	return (0);
+}
+
+int	eaten(t_data *data)
+{
+	int	i;
+	int	finish_result;
+
+	i = 0;
+	finish_result = 1;
 	if (data->meal_num != -1)
 	{
 		i = 0;
@@ -56,21 +63,10 @@ int	eaten_died(t_data *data)
 
 void	observer(t_data *data)
 {
-	int	flag;
-	int	i;
-
-	flag = 1;
-	ft_usleep(10);
-	while (flag)
+	while (!eaten(data) && !died(data))
 	{
-		i = -1;
-		while (++i < data->philo_num)
-		{
-			if (eaten_died(data))
-			{
-				flag = 0;
-			}
-		}
+		continue ;
+		usleep(10);
 	}
 	join_destroy(data);
 }
