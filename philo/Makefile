@@ -6,7 +6,7 @@
 #    By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 14:04:26 by mtoof             #+#    #+#              #
-#    Updated: 2023/04/27 15:12:22 by mtoof            ###   ########.fr        #
+#    Updated: 2023/05/03 18:21:03 by mtoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ HEADER = ./header/
 SRC_DIR = ./src/
 vpath %.c $(SRC_DIR)
 SRC = philo.c ft_atol.c check_digit.c error_handling.c init_data.c time_util.c print_msg.c \
-		routine.c eaten_died.c
-		
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g -static-libsan
+		routine.c observer.c
+
+FLAGS = -Wall -Wextra -Werror
 OBJ_DIR = obj/
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 

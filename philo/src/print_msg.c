@@ -6,25 +6,22 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:27:25 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/01 17:57:53 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/03 15:29:14 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	realtime(long long time)
+void	print_msg(u_int64_t time, t_philo *philo, char *msg)
 {
-	long long	realtime;
+	u_int64_t	real_time;
 
-	realtime = get_time() - time;
-	return (realtime);
-}
-
-void	print_msg(long long time, t_philo *philo, char *msg)
-{
-	pthread_mutex_lock(&philo->data->print);
+	real_time = get_time() - time;
 	if (!(checker(philo, 0)))
-		printf("%lld %d %s\n", realtime(time), philo->id, msg);
-	pthread_mutex_unlock(&philo->data->print);
+	{
+		pthread_mutex_lock(&philo->print);
+		printf("%llu %d %s\n", real_time, philo->id, msg);
+		pthread_mutex_unlock(&philo->print);
+	}
 }
 	
