@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:12:39 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/03 18:25:12 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/04 16:04:20 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	ft_usleep(t_philo *philo, u_int64_t time)
 
 	loop = get_time() + time;
 	while (get_time() < loop && !(checker(philo, 0)))
-		usleep(1000);
+		usleep(500);
 }

@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/03 18:06:49 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/04 16:39:30 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	died(t_data *data)
 				pthread_mutex_unlock(&data->fork[data->philo[i].id
 					% (data->philo_num)]);
 			}
-			print_msg(data->start_time, &data->philo[i], "died");
+			print_msg(data->philo[i].start_time, &data->philo[i], "died");
 			checker(data->philo, 1);
 			pthread_mutex_unlock(&data->philo[i].eaten);
 			return (1);
@@ -83,6 +83,7 @@ int	eaten(t_data *data)
 			return (1);
 		}
 	}
+	usleep(100);
 	return (0);
 }
 
