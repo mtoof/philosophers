@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/04/21 11:52:22 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/10 13:55:32 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ static void	args_error(int ac, char **av, int flag)
 	if (ac < 5 && flag == 0)
 	{
 		printf("%s: Not Enough Arguments\n", av[0]);
-		printf("%s: num_philos time_to_die time_to_eat"
-			" time_to_sleep n_times_philo_must_eat"
-			"(optional)\n", av[0]);
+		printf("%s: num_philos time_die time_eat"
+			" time_sleep meal_number(optional)\n", av[0]);
 	}
 	else if (ac > 6 && flag == 0)
 		printf("%s: Too many arguments\n", av[0]);

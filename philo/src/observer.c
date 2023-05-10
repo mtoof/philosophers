@@ -6,96 +6,92 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/04 16:39:30 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/10 16:29:10 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	checker(t_philo *philo, int flag)
+int	checker(t_philo *philo, int exit_flag)
 {
-	pthread_mutex_lock(&philo->data->finish);
-	if (flag == 1)
+	pthread_mutex_lock(&philo->data->finish_mutex);
+	if (exit_flag == 1)
 	{
-		philo->data->eaten_enough = 1;
-		pthread_mutex_unlock(&philo->data->finish);
+		philo->data->must_exit = 1;
+		pthread_mutex_unlock(&philo->data->finish_mutex);
 		return (1);
 	}
-	if (philo->data->eaten_enough)
+	if (philo->data->must_exit)
 	{
-		pthread_mutex_unlock(&philo->data->finish);
+		pthread_mutex_unlock(&philo->data->finish_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->data->finish);
+	pthread_mutex_unlock(&philo->data->finish_mutex);
 	return (0);
 }
 
-int	died(t_data *data)
+int	philo_num_one(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->philo_num)
+	pthread_mutex_lock(&philo->data->eaten_mutex);
+	ft_usleep(philo, philo->data->death_time);
+	if ((get_time() - philo->last_meal) >= philo->data->death_time)
 	{
-		pthread_mutex_lock(&data->philo[i].eaten);
-		if ((get_time() - data->philo[i].last_meal) >= data->death_time)
-		{
-			if (data->philo_num == 1)
-			{
-				pthread_mutex_unlock(&data->fork[data->philo[i].id - 1]);
-				pthread_mutex_unlock(&data->fork[data->philo[i].id
-					% (data->philo_num)]);
-			}
-			print_msg(data->philo[i].start_time, &data->philo[i], "died");
-			checker(data->philo, 1);
-			pthread_mutex_unlock(&data->philo[i].eaten);
-			return (1);
-		}
-		pthread_mutex_unlock(&data->philo[i].eaten);
-		i++;
-		usleep(100);
+		print_msg(philo, "died");
+		checker(philo->data->philo, 1);
+		pthread_mutex_unlock(&philo->data->eaten_mutex);
 	}
-	return (0);
+	pthread_mutex_unlock(&philo->data->fork[0]);
+	pthread_mutex_unlock(&philo->data->fork[0]);
+	pthread_mutex_unlock(&philo->data->eaten_mutex);
+	return (1);
 }
 
-int	eaten(t_data *data)
+int	died_eaten(t_philo *philo)
 {
-	int	i;
-	int	finish_result;
-
-	i = 0;
-	finish_result = 1;
-	if (data->meal_num != -1)
+	pthread_mutex_lock(&philo->data->eaten_mutex);
+	if ((get_time() - philo->last_meal) >= philo->data->death_time)
 	{
-		i = 0;
-		while (i < data->philo_num)
+		print_msg(philo, "died");
+		checker(philo->data->philo, 1);
+		pthread_mutex_unlock(&philo->data->eaten_mutex);
+		return (1);
+	}
+	else if (philo->data->meal_num > 0
+		&& (philo->eat_count == philo->data->meal_num))
+	{
+		philo->data->finished++;
+		if (philo->data->finished >= philo->data->philo_num)
 		{
-			pthread_mutex_lock(&data->philo[i].eaten);
-			if (data->philo[i].finished == 0)
-				finish_result = 0;
-			pthread_mutex_unlock(&data->philo[i].eaten);
-			i++;
-		}
-		i = 0;
-		if (finish_result == 1)
-		{
-			checker(data->philo, 1);
+			checker(philo->data->philo, 1);
+			pthread_mutex_unlock(&philo->data->eaten_mutex);
 			return (1);
 		}
 	}
-	usleep(100);
+	pthread_mutex_unlock(&philo->data->eaten_mutex);
 	return (0);
 }
 
 void	observer(t_data *data)
 {
-	int	flag;
+	int	exit_flag;
+	int	i;
 
-	flag = 1;
-	while (flag)
+	exit_flag = 1;
+	while (exit_flag)
 	{
-		if (died(data) || eaten(data))
-			flag = 0;
+		i = -1;
+		data->finished = 0;
+		while (++i < data->philo_num)
+		{
+			if (data->philo_num == 1)
+			{
+				philo_num_one(data->philo);
+				exit_flag = 0;
+			}
+			else if (died_eaten(&data->philo[i]))
+				exit_flag = 0;
+		}
+		usleep(10);
 	}
 	join_destroy(data);
 }
