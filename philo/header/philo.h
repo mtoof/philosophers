@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 15:10:32 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/10 18:49:02 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ typedef struct s_philo
 {
 	int				id;
 	int				eat_count;
-	int				status;
-	u_int64_t		time_to_die;
 	u_int64_t		last_meal;
-	u_int64_t		start_time;
 	struct s_data	*data;
 }					t_philo;
 

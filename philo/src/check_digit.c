@@ -6,13 +6,13 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 13:55:32 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/10 18:40:09 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_isdigit(int c)
+static int	ft_isdigit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -46,6 +46,12 @@ static int	check_digit(char **av)
 		j = 0;
 		while (av[i][j])
 		{
+			if (av[i][j] == '-' || av[i][j] == '+')
+			{
+				j++;
+				if (av[i][j] == '\0')
+					return (-1);
+			}
 			if (ft_isdigit(av[i][j]) == 1)
 				j++;
 			else
@@ -53,7 +59,21 @@ static int	check_digit(char **av)
 		}
 		i++;
 	}
-	return (1);
+	return (0);
+}
+
+static int	check_positive(int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_atol(av[i]) <= 0)
+			return (-1);
+		i++;
+	}
+	return (0);
 }
 
 int	check_args(int ac, char **av)
@@ -63,10 +83,15 @@ int	check_args(int ac, char **av)
 		args_error(ac, av, 0);
 		return (-1);
 	}
-	if (check_digit(av) != 1)
+	if (check_digit(av) != 0)
 	{
 		args_error(ac, av, 1);
 		return (-1);
 	}
-	return (1);
+	if (check_positive(ac, av) != 0)
+	{
+		printf("Aguments must be > 0\n");
+		return (-1);
+	}
+	return (0);
 }
