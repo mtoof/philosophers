@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:27:25 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 13:46:32 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/10 19:09:31 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	print_msg(t_philo *philo, char *msg)
 	{
 		usleep(10);
 		real_time = get_time();
-		printf("%lld %d %s\n", real_time - philo->data->start_time, philo->id, msg);
+		printf("%lld %d %s\n", real_time - philo->data->start_time, philo->id,
+			msg);
 	}
 	pthread_mutex_unlock(&philo->data->print);
 }
-	

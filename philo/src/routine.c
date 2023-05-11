@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 16:16:13 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 14:49:32 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	take_fork(t_philo *philo)
 		% (philo->data->philo_num)]);
 	print_msg(philo, "has taken a fork");
 	print_msg(philo, "is eating");
+	ft_usleep(philo, philo->data->eat_time);
 	pthread_mutex_lock(&philo->data->eaten_mutex);
 	philo->eat_count++;
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->data->eaten_mutex);
-	ft_usleep(philo, philo->data->eat_time);
 	pthread_mutex_unlock(&philo->data->fork[philo->id
 		% (philo->data->philo_num)]);
 	pthread_mutex_unlock(&philo->data->fork[philo->id - 1]);
