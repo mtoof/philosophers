@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 18:51:05 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 18:32:14 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	died_eaten(t_philo *philo)
 		return (1);
 	}
 	else if (philo->data->meal_num > 0
-		&& (philo->eat_count == philo->data->meal_num))
+		&& (philo->eat_count >= philo->data->meal_num))
 	{
 		philo->data->finished++;
 		if (philo->data->finished >= philo->data->philo_num)

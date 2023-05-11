@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 18:40:09 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 19:14:25 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ static void	args_error(int ac, char **av, int flag)
 	{
 		printf("%s: Not Enough Arguments\n", av[0]);
 		printf("%s: num_philos time_die time_eat"
-			" time_sleep meal_number(optional)\n", av[0]);
+			" time_sleep meal_number(optional)\n",
+			av[0]);
 	}
 	else if (ac > 6 && flag == 0)
 		printf("%s: Too many arguments\n", av[0]);
 	else if (flag == 1)
 	{
-		printf("%s: Invalid arguments\n", av[0]);
+		printf("%s: Invalid arguments,"
+			" arguments must be a positive integer number\n",
+			av[0]);
 	}
 }
 
@@ -44,9 +47,9 @@ static int	check_digit(char **av)
 	while (av[i])
 	{
 		j = 0;
-		while (av[i][j])
+		while (av[i][j] && j < 12)
 		{
-			if (av[i][j] == '-' || av[i][j] == '+')
+			if (av[i][j] == '+')
 			{
 				j++;
 				if (av[i][j] == '\0')
@@ -65,13 +68,18 @@ static int	check_digit(char **av)
 static int	check_positive(int ac, char **av)
 {
 	int	i;
+	int	num;
 
-	i = 1;
-	while (i < ac)
+	i = ac - 1;
+	while (i > 0)
 	{
-		if (ft_atol(av[i]) <= 0)
+		num = ft_atoi(av[i]);
+		printf("num = %d\n", num);
+		if (num > 2147483647 || num < 0)
 			return (-1);
-		i++;
+		if (i == 1 && (num < 0 || num > 250))
+			return (-2);
+		i--;
 	}
 	return (0);
 }
@@ -88,9 +96,14 @@ int	check_args(int ac, char **av)
 		args_error(ac, av, 1);
 		return (-1);
 	}
-	if (check_positive(ac, av) != 0)
+	if (check_positive(ac, av) == -2)
 	{
-		printf("Aguments must be > 0\n");
+		printf("Philo number must be > 0 and less than 250\n");
+		return (-1);
+	}
+	else if (check_positive(ac, av) == -1)
+	{
+		printf("Aguments must be a poitive integer number\n");
 		return (-1);
 	}
 	return (0);

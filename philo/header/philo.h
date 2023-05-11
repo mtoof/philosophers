@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 15:24:28 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 18:59:25 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 }					t_data;
 
-long				ft_atol(const char *str);
+int					ft_atoi(const char *str);
 int					check_args(int ac, char **av);
 int					data_init(t_data *data, char **av, int ac);
 int					init_mutex(t_data *data);
