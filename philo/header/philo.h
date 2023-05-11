@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 18:49:02 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:24:28 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void				*routine(void *data);
 void				observer(t_data *data);
 int					join_destroy(t_data *data);
 int					checker(t_philo *philo, int flag);
-void				error_handling(t_data *data);
+void				error_handling(t_data *data, int flag);
 
 #endif

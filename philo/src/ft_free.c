@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 13:59:27 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 16:26:13 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:39:23 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	join_destroy(t_data *data)
 	i = -1;
 	while (++i < data->philo_num)
 		pthread_mutex_destroy(&data->fork[i]);
-	free(data->fork);
-	free(data->tr);
+	if (data->fork)
+		free(data->fork);
+	if (data->tr)
+		free(data->tr);
+	if (data->philo)
+		free(data->philo);
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->eaten_mutex);
 	pthread_mutex_destroy(&data->finish_mutex);

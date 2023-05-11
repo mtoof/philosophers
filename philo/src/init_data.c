@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/10 18:47:47 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:42:18 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	alloc_philo_data(t_data *data)
 	int	i;
 
 	data->tr = malloc(sizeof(pthread_t) * data->philo_num);
+	if (!data->tr)
+		return (-1);
 	data->philo = malloc(sizeof(t_philo) * data->philo_num);
-	if (!data->philo || !data->tr)
+	if (!data->philo)
 		return (-1);
 	i = -1;
 	while (++i < data->philo_num)
@@ -79,6 +81,8 @@ int	data_init(t_data *data, char **av, int ac)
 	if (alloc_philo_data(data) != 0)
 		return (-1);
 	if (alloc_mutex(data) != 0)
+		return (-1);
+	if (init_mutex(data) != 0)
 		return (-1);
 	return (0);
 }
