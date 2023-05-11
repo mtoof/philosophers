@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 19:14:25 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/11 19:20:16 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static int	check_positive(int ac, char **av)
 	while (i > 0)
 	{
 		num = ft_atoi(av[i]);
-		printf("num = %d\n", num);
 		if (num > 2147483647 || num < 0)
 			return (-1);
 		if (i == 1 && (num < 0 || num > 250))
