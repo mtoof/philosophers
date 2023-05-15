@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 18:59:25 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:14:27 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <sys/types.h>
 
 typedef struct s_philo
 {
@@ -40,6 +41,7 @@ typedef struct s_data
 	u_int64_t		sleep_time;
 	u_int64_t		start_time;
 	pthread_mutex_t	print;
+	pthread_mutex_t	start;
 	pthread_mutex_t	eaten_mutex;
 	pthread_mutex_t	finish_mutex;
 	pthread_mutex_t	*fork;

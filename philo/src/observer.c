@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 18:32:14 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:25:50 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ void	observer(t_data *data)
 			else if (died_eaten(&data->philo[i]))
 				exit_flag = 0;
 		}
-		usleep(10);
+		if (data->philo_num > 150)
+			usleep(9500);
+		else
+			usleep(500);
 	}
 	join_destroy(data);
 }

@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 15:01:25 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:16:39 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	*routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	pthread_mutex_lock(&philo->data->start);
+	pthread_mutex_unlock(&philo->data->start);
 	print_msg(philo, "is thinking");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, philo->data->eat_time);

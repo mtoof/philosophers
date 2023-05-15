@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 18:17:47 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:14:52 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->eaten_mutex, NULL) != 0)
 		return (-1);
 	if (pthread_mutex_init(&data->finish_mutex, NULL) != 0)
+		return (-1);
+	if (pthread_mutex_init(&data->start, NULL) != 0)
 		return (-1);
 	return (0);
 }
