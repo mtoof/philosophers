@@ -6,7 +6,7 @@
 #    By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 14:04:26 by mtoof             #+#    #+#              #
-#    Updated: 2023/05/11 18:17:29 by mtoof            ###   ########.fr        #
+#    Updated: 2023/05/15 23:27:53 by mtoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,24 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(FLAGS) -pthread -I$(HEADER) $^ -o $@
+	@echo "\033[0;32mCompiling files.\c\033[0m"
+	@sleep 0.1
+	@echo "\033[0;32m.\c\033[0m"
+	@sleep 0.1
+	@echo "\033[0;32m.\033[0m"
+	@gcc $(FLAGS) -pthread -I$(HEADER) $^ -o $@
+	@echo "\033[0;32mDone.\033[0m"
 
-$(OBJ): $(OBJ_DIR)%.o: %.c | obj_dir
-	gcc $(FLAGS) -pthread -I$(HEADER) -c -o $@ $<
+$(OBJ): $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
+	@gcc $(FLAGS) -pthread -I$(HEADER) -c -o $@ $<
 clean:
-	rm -rf $(OBJ_DIR)
+	@echo "\033[0;35mOBJ files have been deleted.\033[0m"
+	@rm -rf $(OBJ_DIR)
 fclean: clean
-	rm -f $(NAME)
+	@echo "\033[0;31mPhilo exec file has been deleted.\033[0m"
+	@rm -f $(NAME)
 re: fclean all
 
-obj_dir:
+$(OBJ_DIR):
+	@echo "\033[0mCreate OBJ Dir"
 	@mkdir -p $(OBJ_DIR)
