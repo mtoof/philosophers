@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 19:20:16 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 23:10:11 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_digit(char **av)
 	while (av[i])
 	{
 		j = 0;
-		while (av[i][j] && j < 12)
+		while (av[i][j])
 		{
 			if (av[i][j] == '+')
 			{
@@ -67,14 +67,14 @@ static int	check_digit(char **av)
 
 static int	check_positive(int ac, char **av)
 {
-	int	i;
-	int	num;
+	int		i;
+	long	num;
 
 	i = ac - 1;
 	while (i > 0)
 	{
 		num = ft_atoi(av[i]);
-		if (num > 2147483647 || num < 0)
+		if (num > INT_MAX || num < 0)
 			return (-1);
 		if (i == 1 && (num < 0 || num > 250))
 			return (-2);
@@ -85,6 +85,9 @@ static int	check_positive(int ac, char **av)
 
 int	check_args(int ac, char **av)
 {
+	int	flag;
+
+	flag = 0;
 	if (ac < 5 || ac > 6)
 	{
 		args_error(ac, av, 0);
@@ -95,12 +98,13 @@ int	check_args(int ac, char **av)
 		args_error(ac, av, 1);
 		return (-1);
 	}
-	if (check_positive(ac, av) == -2)
+	flag = check_positive(ac, av);
+	if (flag == -2)
 	{
 		printf("Philo number must be > 0 and less than 250\n");
 		return (-1);
 	}
-	else if (check_positive(ac, av) == -1)
+	else if (flag == -1)
 	{
 		printf("Aguments must be a poitive integer number\n");
 		return (-1);

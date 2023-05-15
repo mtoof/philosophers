@@ -6,18 +6,11 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:13:33 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/11 19:16:55 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/15 22:47:52 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	ft_handler(int sign)
-{
-	if (sign == 1)
-		return (-1);
-	return (0);
-}
 
 int	ft_atoi(const char *str)
 {
@@ -38,8 +31,10 @@ int	ft_atoi(const char *str)
 	{
 		n = (n * 10) + str[i] - '0';
 		i++;
-		if (n < 0)
-			return (ft_handler(sign));
+		if (sign == 1 && n > INT_MAX)
+			return (-1);
+		if (sign == -1 && n < INT_MIN)
+			return (0);
 	}
 	return ((int)n * sign);
 }
