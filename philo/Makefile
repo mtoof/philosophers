@@ -6,7 +6,7 @@
 #    By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 14:04:26 by mtoof             #+#    #+#              #
-#    Updated: 2023/05/15 23:27:53 by mtoof            ###   ########.fr        #
+#    Updated: 2023/05/15 23:31:03 by mtoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FLAGS = -Wall -Wextra -Werror
 OBJ_DIR = obj/
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
-.PHONY: obj_dir
+.PHONY: all clean fclean re
 
 all : $(NAME)
 
