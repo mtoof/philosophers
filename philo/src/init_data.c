@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:36:36 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/15 22:14:52 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:32:20 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ int	init_mutex(t_data *data)
 int	data_init(t_data *data, char **av, int ac)
 {
 	data->philo_num = ft_atoi(av[1]);
+	if (data->philo_num > 150)
+		data->margin = 2;
+	else
+		data->margin = 0;
 	data->death_time = ft_atoi(av[2]);
 	data->eat_time = ft_atoi(av[3]);
 	data->sleep_time = ft_atoi(av[4]);

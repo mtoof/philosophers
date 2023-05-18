@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/15 22:43:32 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:30:58 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_data
 	int				meal_num;
 	int				must_exit;
 	int				finished;
+	int				margin;
 	t_philo			*philo;
 	pthread_t		*tr;
 	u_int64_t		death_time;

@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/15 23:08:30 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:31:13 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static int	philo_num_one(t_philo *philo)
 	return (1);
 }
 
-static int	died_eaten(t_philo *philo)
+static int	died_eaten(t_philo *philo, int margin)
 {
 	pthread_mutex_lock(&philo->data->eaten_mutex);
-	if ((get_time() - philo->last_meal) >= philo->data->death_time)
+	if ((get_time() - philo->last_meal) >= philo->data->death_time + margin)
 	{
 		print_msg(philo, "died");
 		checker(philo->data->philo, 1);
@@ -88,11 +88,11 @@ void	observer(t_data *data)
 				philo_num_one(data->philo);
 				exit_flag = 0;
 			}
-			else if (died_eaten(&data->philo[i]))
+			else if (died_eaten(&data->philo[i], data->margin))
 				exit_flag = 0;
 		}
 		if (data->philo_num > 150)
-			usleep(9500);
+			ft_usleep(data->philo, 1);
 		else
 			usleep(500);
 	}
