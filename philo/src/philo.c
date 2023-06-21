@@ -21,7 +21,10 @@ int	thread_create(t_data *data)
 	while (i < data->philo_num)
 	{
 		if (pthread_create(&data->tr[i], NULL, &routine, &data->philo[i]))
+		{
+			pthread_mutex_unlock(&data->start);
 			return (-1);
+		}
 		i++;
 	}
 	data->start_time = get_time();
