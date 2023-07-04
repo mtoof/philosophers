@@ -6,19 +6,14 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/18 15:47:23 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/04 17:54:48 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	take_fork(t_philo *philo)
+static void	eat_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->fork[philo->id - 1]);
-	print_msg(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->data->fork[philo->id
-		% (philo->data->philo_num)]);
-	print_msg(philo, "has taken a fork");
 	print_msg(philo, "is eating");
 	pthread_mutex_lock(&philo->data->eaten_mutex);
 	philo->eat_count++;
@@ -33,20 +28,47 @@ static void	take_fork(t_philo *philo)
 	print_msg(philo, "is thinking");
 }
 
+static void	take_fork(t_philo *philo)
+{
+	if (!checker(philo, 0))
+	{
+		pthread_mutex_lock(&philo->data->fork[philo->id - 1]);
+		print_msg(philo, "has taken a fork");
+	}
+	else
+		return ;
+	if (!checker(philo, 0))
+	{
+		pthread_mutex_lock(&philo->data->fork[philo->id \
+		% (philo->data->philo_num)]);
+		print_msg(philo, "has taken a fork");
+	}
+	else
+		return ;
+	eat_sleep(philo);
+}
+
 void	*routine(void *data)
 {
 	t_philo	*philo;
+	int		count;
 
+	count = 0;
 	philo = (t_philo *)data;
-	pthread_mutex_lock(&philo->data->start);
-	pthread_mutex_unlock(&philo->data->start);
-	print_msg(philo, "is thinking");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, philo->data->eat_time);
 	while (1)
 	{
 		if ((checker(philo, 0)))
+		{
+			while (++count < philo->data->philo_num)
+			{
+				pthread_mutex_unlock(&philo->data->fork[count - 1]);
+				pthread_mutex_unlock(&philo->data->fork[count \
+				% (philo->data->philo_num)]);
+			}
 			return (NULL);
+		}
 		take_fork(philo);
 	}
 	return (NULL);

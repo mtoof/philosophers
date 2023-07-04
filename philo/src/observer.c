@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/18 18:31:13 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/04 17:52:05 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ static int	philo_num_one(t_philo *philo)
 	return (1);
 }
 
-static int	died_eaten(t_philo *philo, int margin)
+static int	died_eaten(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->eaten_mutex);
-	if ((get_time() - philo->last_meal) >= philo->data->death_time + margin)
+	if ((get_time() - philo->last_meal) >= philo->data->death_time)
 	{
-		print_msg(philo, "died");
 		checker(philo->data->philo, 1);
+		printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id,
+			"died");
 		pthread_mutex_unlock(&philo->data->eaten_mutex);
 		return (1);
 	}
@@ -87,14 +88,15 @@ void	observer(t_data *data)
 			{
 				philo_num_one(data->philo);
 				exit_flag = 0;
+				break ;
 			}
-			else if (died_eaten(&data->philo[i], data->margin))
+			else if (died_eaten(&data->philo[i]))
+			{
 				exit_flag = 0;
+				break ;
+			}
 		}
-		if (data->philo_num > 150)
-			ft_usleep(data->philo, 1);
-		else
-			usleep(500);
+		usleep(500);
 	}
 	join_destroy(data);
 }

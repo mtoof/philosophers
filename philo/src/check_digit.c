@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:41:09 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/15 23:10:11 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/04 17:15:11 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	args_error(int ac, char **av, int flag)
 		printf("%s: Too many arguments\n", av[0]);
 	else if (flag == 1)
 	{
-		printf("%s: Invalid arguments,"
-			" arguments must be a positive integer number\n",
-			av[0]);
+		printf("%s: Invalid arguments," \
+		" arguments must be > 0\n", \
+		av[0]);
 	}
 }
 
@@ -70,15 +70,18 @@ static int	check_positive(int ac, char **av)
 	int		i;
 	long	num;
 
-	i = ac - 1;
-	while (i > 0)
+	i = 1;
+	while (i <= ac - 1)
 	{
 		num = ft_atoi(av[i]);
-		if (num > INT_MAX || num < 0)
-			return (-1);
-		if (i == 1 && (num < 0 || num > 250))
+		if (i == 1 && (num <= 0 || num > 250))
+		{
+			printf("%s: Philo number must be > 0 and less than 250\n", av[0]);
 			return (-2);
-		i--;
+		}
+		else if (i > 0 && num <= 0)
+			return (-1);
+		i++;
 	}
 	return (0);
 }
@@ -100,13 +103,10 @@ int	check_args(int ac, char **av)
 	}
 	flag = check_positive(ac, av);
 	if (flag == -2)
-	{
-		printf("Philo number must be > 0 and less than 250\n");
 		return (-1);
-	}
 	else if (flag == -1)
 	{
-		printf("Aguments must be a poitive integer number\n");
+		printf("%s: Invalid arguments, Aguments must be > 0\n", av[0]);
 		return (-1);
 	}
 	return (0);

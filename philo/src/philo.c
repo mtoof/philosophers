@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:11 by mtoof             #+#    #+#             */
-/*   Updated: 2023/05/15 22:18:39 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/04 13:41:54 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	thread_create(t_data *data)
 	int	i;
 
 	i = 0;
+	data->start_time = get_time();
 	pthread_mutex_lock(&data->start);
 	while (i < data->philo_num)
 	{
@@ -27,7 +28,6 @@ int	thread_create(t_data *data)
 		}
 		i++;
 	}
-	data->start_time = get_time();
 	pthread_mutex_unlock(&data->start);
 	return (0);
 }

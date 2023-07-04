@@ -6,7 +6,7 @@
 #    By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 14:04:26 by mtoof             #+#    #+#              #
-#    Updated: 2023/05/18 15:30:29 by mtoof            ###   ########.fr        #
+#    Updated: 2023/07/04 16:40:12 by mtoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ vpath %.c $(SRC_DIR)
 SRC = philo.c ft_atoi.c check_digit.c error_handling.c init_data.c time_util.c print_msg.c \
 		routine.c observer.c ft_free.c
 
-FLAGS = -Wall -Wextra -Werror -o2
+FLAGS = -Wall -Wextra -Werror -o2 #-fsanitize=thread
 OBJ_DIR = obj/
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
