@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/04 18:26:34 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/16 15:04:33 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ static void	take_fork(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->data->fork[philo->id - 1]);
 		print_msg(philo, "has taken a fork");
-	}
-	else
-		return ;
-	if (!checker(philo, 0))
-	{
 		pthread_mutex_lock(&philo->data->fork[philo->id \
 		% (philo->data->philo_num)]);
 		print_msg(philo, "has taken a fork");
@@ -55,22 +50,12 @@ void	*routine(void *data)
 
 	count = 0;
 	philo = (t_philo *)data;
-	// pthread_mutex_lock(&philo->data->start);
-	// pthread_mutex_unlock(&philo->data->start);
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, philo->data->eat_time);
 	while (1)
 	{
 		if ((checker(philo, 0)))
-		{
-			while (++count < philo->data->philo_num)
-			{
-				pthread_mutex_unlock(&philo->data->fork[count - 1]);
-				pthread_mutex_unlock(&philo->data->fork[count \
-				% (philo->data->philo_num)]);
-			}
 			return (NULL);
-		}
 		take_fork(philo);
 	}
 	return (NULL);

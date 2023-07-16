@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/04 18:17:04 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/16 18:35:30 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int	checker(t_philo *philo, int exit_flag)
 static int	philo_num_one(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->eaten_mutex);
-	ft_usleep(philo, philo->data->death_time);
-	if ((get_time() - philo->last_meal) >= philo->data->death_time)
+	if ((get_time() - philo->data->start_time) >= philo->data->death_time)
 	{
-		print_msg(philo, "died");
-		checker(philo->data->philo, 1);
+		printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id,
+			"died");
 		pthread_mutex_unlock(&philo->data->eaten_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->fork[0]);
