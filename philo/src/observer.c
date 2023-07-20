@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/16 18:35:30 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/20 11:38:30 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	philo_num_one(t_philo *philo)
 	pthread_mutex_lock(&philo->data->eaten_mutex);
 	if ((get_time() - philo->data->start_time) >= philo->data->death_time)
 	{
-		printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id,
+		printf("%lu %d %s\n", get_time() - philo->data->start_time, philo->id,
 			"died");
 		pthread_mutex_unlock(&philo->data->eaten_mutex);
 	}
@@ -51,7 +51,7 @@ static int	died_eaten(t_philo *philo)
 	if ((get_time() - philo->last_meal) >= philo->data->death_time)
 	{
 		checker(philo->data->philo, 1);
-		printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id,
+		printf("%lu %d %s\n", get_time() - philo->data->start_time, philo->id,
 			"died");
 		pthread_mutex_unlock(&philo->data->eaten_mutex);
 		return (1);
