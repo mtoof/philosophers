@@ -6,20 +6,20 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/24 17:16:34 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:11:58 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
-# include <sys/types.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
@@ -53,6 +53,7 @@ int					data_init(t_data *data, char **av, int ac);
 int					init_mutex(t_data *data);
 void				ft_usleep(t_philo *philo, u_int64_t time);
 u_int64_t			get_time(void);
+unsigned long long	get_time_micro(void);
 void				print_msg(t_philo *philo, char *msg);
 void				*routine(void *data);
 void				observer(t_data *data);

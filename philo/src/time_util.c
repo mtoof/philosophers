@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:12:39 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/24 17:02:40 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 18:21:46 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ u_int64_t	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-static unsigned long long	get_current_time_micro(void)
+unsigned long long	get_time_micro(void)
 {
 	struct timeval	current_time;
 
@@ -32,13 +32,8 @@ static unsigned long long	get_current_time_micro(void)
 void	ft_usleep(t_philo *philo, u_int64_t time)
 {
 	u_int64_t	loop;
-	int			wait_time;
 
-	if (philo->data->philo_num <= 10)
-		wait_time = 10;
-	else
-		wait_time = 500;
-	loop = get_current_time_micro() + (time * 1000);
-	while (!(checker(philo, 0)) && (get_current_time_micro() < loop))
-		usleep(wait_time);
+	loop = get_time_micro() + (time * 1000);
+	while (!checker(philo, 0) && get_time_micro() < loop)
+		usleep(500);
 }

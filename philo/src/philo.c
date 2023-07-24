@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:11 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/16 15:42:49 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:12:12 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int	thread_create(t_data *data)
 	int	i;
 
 	i = 0;
-	data->start_time = get_time();
+	data->start_time = get_time_micro() / 1000;
 	while (i < data->philo_num)
 	{
+		data->philo[i].last_meal = data->start_time;
 		if (pthread_create(&data->tr[i], NULL, &routine, &data->philo[i]))
 			return (-1);
 		i++;

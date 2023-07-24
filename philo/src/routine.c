@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 11:36:18 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/19 08:37:28 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:27:31 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ static void	take_fork(t_philo *philo)
 void	*routine(void *data)
 {
 	t_philo	*philo;
+	int		count;
 
+	count = 0;
 	philo = (t_philo *)data;
+	printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id, \
+			"thinking");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, philo->data->eat_time);
 	while (1)

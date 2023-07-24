@@ -6,7 +6,7 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:40:50 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/24 12:13:59 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:25:01 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,28 @@ int	checker(t_philo *philo, int exit_flag)
 
 static int	philo_num_one(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->eaten_mutex);
-	if ((get_time() - philo->data->start_time) >= philo->data->death_time)
-	{
-		printf("%llu %d %s\n", get_time() - philo->data->start_time, philo->id,
+	ft_usleep(philo, philo->data->death_time);
+	printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id, \
 			"died");
-		pthread_mutex_unlock(&philo->data->eaten_mutex);
-	}
+	checker(philo, 1);
 	pthread_mutex_unlock(&philo->data->fork[0]);
-	pthread_mutex_unlock(&philo->data->fork[0]);
-	pthread_mutex_unlock(&philo->data->eaten_mutex);
 	return (1);
 }
 
 static int	died_eaten(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->eaten_mutex);
-	if ((get_time() - philo->last_meal) >= philo->data->death_time)
+	if (((get_time_micro() / 1000)
+			- philo->last_meal) >= philo->data->death_time)
 	{
 		checker(philo->data->philo, 1);
-		printf("%llu %d %s\n", get_time() - philo->data->start_time, philo->id,
-			"died");
+		printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id, \
+				"died");
 		pthread_mutex_unlock(&philo->data->eaten_mutex);
 		return (1);
 	}
-	else if (philo->data->meal_num > 0
-		&& (philo->eat_count >= philo->data->meal_num))
+	else if (philo->data->meal_num > 0 \
+			&& (philo->eat_count >= philo->data->meal_num))
 	{
 		philo->data->finished++;
 		if (philo->data->finished >= philo->data->philo_num)
