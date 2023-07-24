@@ -1,4 +1,6 @@
 # Philosophers - 42 school project - validated at 100%
+If you want to test my program on Linux be aware to change the %llu flag in all printf to %lu, The reason is macOS used the LP64 data model, where long and pointers are 64-bit but the Linux typically uses the ILP32 or LP32 data model, where int, long, and pointers are all 32-bit.
+You can recompilie the program with -fsanitize=thread to check for data_race or deadlock, just be aware using that flag with larg number of philosophers can kill the philosophers which is not an issue.
 This project is a training to multi-threads/multi-process programming with the use of mutex.  
 It contains the famous Dining Philosophers problem with several basic rules.  
 This project is also a good lesson in C optimization as we need to save every bit of CPU usage we can to ensure the survival of our philosophers.
