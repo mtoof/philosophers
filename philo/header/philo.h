@@ -6,20 +6,20 @@
 /*   By: mtoof <mtoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:05:14 by mtoof             #+#    #+#             */
-/*   Updated: 2023/07/16 18:35:12 by mtoof            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:16:34 by mtoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
-# include <unistd.h>
 # include <sys/types.h>
-# include <limits.h>
+# include <unistd.h>
 
 typedef struct s_philo
 {
