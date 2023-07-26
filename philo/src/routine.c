@@ -46,9 +46,7 @@ static void	take_fork(t_philo *philo)
 void	*routine(void *data)
 {
 	t_philo	*philo;
-	int		count;
 
-	count = 0;
 	philo = (t_philo *)data;
 	printf("%lld %d %s\n", get_time() - philo->data->start_time, philo->id, \
 			"thinking");
